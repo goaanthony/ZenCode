@@ -1,4 +1,3 @@
-// serveur/serveur.js
 const express = require('express');
 const path = require('path');
 const app = express();
@@ -6,7 +5,7 @@ const PORT = 8080;
 
 // Importation des routes
 const homeRoutes = require('../backend/route/home');
-const editRoutes = require('../backend/route/edit')
+const editRoutes = require('../backend/route/edit.js')
 
 // Fichiers statiques front
 app.use(express.static(path.join(__dirname, '../frontend')));
@@ -15,7 +14,7 @@ app.use(express.static(path.join(__dirname, '../frontend')));
 app.use('/', homeRoutes);
 
 // Route Edit de fichier 
-app.use('/edit', )
+app.use('/edit', editRoutes)
 
 // start serveur
 app.listen(PORT, () => {
