@@ -1,12 +1,29 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="../css/home_page.css">
-    <title>Bienvenue sur Zencode !</title>
+  <meta charset="UTF-8" />
+  <title>Mini-VSCode - Upload de fichier</title>
+  <link rel="stylesheet" href="../css/home_page.css" />
 </head>
 <body>
-    <h1>Hello, World!</h1>
+  <h1>Lecture du texte</h1>
+  <input type="file" id="fileInput" accept=".txt,.js,.html,.css,.json" />
+  <br/><br/>
+  <textarea id="fileContent" rows="20" cols="100" placeholder="Contenu du fichier..."></textarea>
+
+  <script>
+    const fileInput = document.getElementById("fileInput");
+    const fileContent = document.getElementById("fileContent");
+    fileInput.addEventListener("change", (event) => {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          fileContent.value = e.target.result;
+        };
+        reader.readAsText(file, "UTF-8");
+      }
+    });
+  </script>
 </body>
 </html>
