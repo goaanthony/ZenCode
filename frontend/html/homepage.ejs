@@ -67,15 +67,12 @@
                 automaticLayout: true
             });
         });
-
         const fileInput = document.getElementById('fileInput');
         const fileNameInput = document.getElementById('fileNameInput');
         const saveBtn = document.getElementById('saveBtn');
-
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
-
             fileNameInput.value = file.name;
             const extension = file.name.split('.').pop();
             const reader = new FileReader();
@@ -94,16 +91,13 @@
             };
             reader.readAsText(file, 'UTF-8');
         });
-
         saveBtn.addEventListener('click', () => {
             const content = editor.getValue();
             const fileName = fileNameInput.value.trim();
-
             if (!fileName) {
                 alert('Veuillez entrer un nom de fichier avant de sauvegarder.');
                 return;
             }
-
             const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
             const link = document.createElement('a');
             link.href = URL.createObjectURL(blob);
