@@ -9,6 +9,39 @@
         body {
             font-family: sans-serif;
             margin: 20px;
+            display: flex;
+            flex-direction: row;
+        }
+
+        #sidebar {
+            width: 200px;
+            margin-right: 20px;
+        }
+
+        #history {
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            padding: 10px;
+            max-height: 400px;
+            overflow-y: auto;
+        }
+
+        #history h3 {
+            margin-top: 0;
+        }
+
+        .history-item {
+            cursor: pointer;
+            padding: 5px;
+            border-radius: 4px;
+        }
+
+        .history-item:hover {
+            background-color: #f0f0f0;
+        }
+
+        #main {
+            flex: 1;
         }
 
         #editor-container {
@@ -40,6 +73,7 @@
 
         input[type="text"] {
             padding: 8px;
+            margin-top: 10px;
             margin-right: 10px;
             border: 1px solid #ccc;
             border-radius: 4px;
@@ -47,17 +81,26 @@
     </style>
 </head>
 <body>
-    <h1>Zencode</h1>
-    <input type="file" id="fileInput" accept=".txt,.js,.html,.css,.json" />
-    <input type="text" id="fileNameInput" placeholder="Nom du fichier..." />
-    <div id="editor-container"></div>
-    <div id="actions">
-        <button id="saveBtn">💾 Sauvegarder</button>
+    <div id="sidebar">
+        <h3>📂 Historique</h3>
+        <div id="history"></div>
+    </div>
+    <div id="main">
+        <h1>Zencode</h1>
+        <input type="file" id="fileInput" accept=".txt,.js,.html,.css,.json" />
+        <input type="text" id="fileNameInput" placeholder="Nom du fichier..." />
+        <div id="editor-container"></div>
+        <div id="actions">
+            <button id="saveBtn">💾 Sauvegarder</button>
+            <button id="resetBtn">🗑️ Réinitialiser</button>
+        </div>
     </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
     <script>
         let editor;
+        let originalContent = '';
+        let recentFiles = [];
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
         require(['vs/editor/editor.main'], function () {
             editor = monaco.editor.create(document.getElementById('editor-container'), {
@@ -70,24 +113,50 @@
         const fileInput = document.getElementById('fileInput');
         const fileNameInput = document.getElementById('fileNameInput');
         const saveBtn = document.getElementById('saveBtn');
+        const resetBtn = document.getElementById('resetBtn');
+        const historyContainer = document.getElementById('history');
+
+        function updateHistoryUI() {
+            historyContainer.innerHTML = '';
+            recentFiles.slice().reverse().forEach(file => {
+                const div = document.createElement('div');
+                div.className = 'history-item';
+                div.textContent = file.name;
+                div.addEventListener('click', () => {
+                    editor.setValue(file.content);
+                    fileNameInput.value = file.name;
+                    setLanguageFromExtension(file.name);
+                    originalContent = file.content;
+                });
+                historyContainer.appendChild(div);
+            });
+        }
+
+        function setLanguageFromExtension(filename) {
+            const extension = filename.split('.').pop();
+            const langMap = {
+                js: 'javascript',
+                html: 'html',
+                css: 'css',
+                json: 'json',
+                txt: 'plaintext'
+            };
+            const detectedLang = langMap[extension] || 'plaintext';
+            monaco.editor.setModelLanguage(editor.getModel(), detectedLang);
+        }
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
             fileNameInput.value = file.name;
-            const extension = file.name.split('.').pop();
             const reader = new FileReader();
             reader.onload = function (e) {
                 const content = e.target.result;
                 editor.setValue(content);
-                const langMap = {
-                    js: 'javascript',
-                    html: 'html',
-                    css: 'css',
-                    json: 'json',
-                    txt: 'plaintext'
-                };
-                const detectedLang = langMap[extension] || 'plaintext';
-                monaco.editor.setModelLanguage(editor.getModel(), detectedLang);
+                setLanguageFromExtension(file.name);
+                originalContent = content;
+                recentFiles.push({ name: file.name, content });
+                if (recentFiles.length > 20) recentFiles.shift();
+                updateHistoryUI();
             };
             reader.readAsText(file, 'UTF-8');
         });
@@ -106,6 +175,9 @@
             link.click();
             document.body.removeChild(link);
             URL.revokeObjectURL(link.href);
+        });
+        resetBtn.addEventListener('click', () => {
+            editor.setValue(originalContent || '');
         });
     </script>
 </body>
