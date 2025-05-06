@@ -37,18 +37,27 @@
         button:hover {
             background-color: #2c5282;
         }
+
+        input[type="text"] {
+            padding: 8px;
+            margin-right: 10px;
+            border: 1px solid #ccc;
+            border-radius: 4px;
+        }
     </style>
 </head>
 <body>
     <h1>Zencode</h1>
     <input type="file" id="fileInput" accept=".txt,.js,.html,.css,.json" />
+    <input type="text" id="fileNameInput" placeholder="Nom du fichier..." />
     <div id="editor-container"></div>
-    <div id="actions"><button id="saveBtn">💾 Sauvegarder</button></div>
+    <div id="actions">
+        <button id="saveBtn">💾 Sauvegarder</button>
+    </div>
 
     <script src="https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs/loader.min.js"></script>
     <script>
         let editor;
-        let fileName = '';
         require.config({ paths: { 'vs': 'https://cdnjs.cloudflare.com/ajax/libs/monaco-editor/0.45.0/min/vs' } });
         require(['vs/editor/editor.main'], function () {
             editor = monaco.editor.create(document.getElementById('editor-container'), {
@@ -60,10 +69,14 @@
         });
 
         const fileInput = document.getElementById('fileInput');
+        const fileNameInput = document.getElementById('fileNameInput');
+        const saveBtn = document.getElementById('saveBtn');
+
         fileInput.addEventListener('change', (event) => {
             const file = event.target.files[0];
             if (!file) return;
-            fileName = file.name;
+
+            fileNameInput.value = file.name;
             const extension = file.name.split('.').pop();
             const reader = new FileReader();
             reader.onload = function (e) {
@@ -81,21 +94,25 @@
             };
             reader.readAsText(file, 'UTF-8');
         });
+
         saveBtn.addEventListener('click', () => {
-        const content = editor.getValue();
-        if (!fileName) {
-            alert('Aucun fichier sélectionné.');
-            return;
-        }
-        const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
-        const link = document.createElement('a');
-        link.href = URL.createObjectURL(blob);
-        link.download = fileName;
-        document.body.appendChild(link);
-        link.click();
-        document.body.removeChild(link);
-        URL.revokeObjectURL(link.href);
-    });
+            const content = editor.getValue();
+            const fileName = fileNameInput.value.trim();
+
+            if (!fileName) {
+                alert('Veuillez entrer un nom de fichier avant de sauvegarder.');
+                return;
+            }
+
+            const blob = new Blob([content], { type: 'text/plain;charset=utf-8' });
+            const link = document.createElement('a');
+            link.href = URL.createObjectURL(blob);
+            link.download = fileName;
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+            URL.revokeObjectURL(link.href);
+        });
     </script>
 </body>
 </html>
