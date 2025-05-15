@@ -10,7 +10,7 @@ const homeRoutes = require('./backend/route/home.js');
 const editRoutes = require('./backend/route/edit.js')
 
 // Fichiers statiques front
-app.use(express.static(path.join(__dirname, '../frontend')));
+app.use(express.static(path.join(__dirname, './frontend')));
 
 // Route page d'accueil
 app.use('/', homeRoutes);
