@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Éditer <%= fileName %></title>
+    <link rel="stylesheet" href="/css/home_page.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Éditer <%= fileName %></h1>
+        <form action="/save" method="post">
+            <input type="hidden" name="fileName" value="<%= fileName %>">
+            <textarea id="editor" name="content" rows="20" cols="80"><%= content %></textarea>
+            <button type="submit">Sauvegarder</button>
+            <a href="/">Retour</a>
+        </form>
+    </div>
+
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="/js/editor.js"></script>
+</body>
+</html>
