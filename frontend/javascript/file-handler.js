@@ -77,3 +77,5 @@ export function setupFileHandlers() {
         });
     }
 }
+
+export { recentFiles };

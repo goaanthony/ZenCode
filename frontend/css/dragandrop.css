@@ -1,0 +1,24 @@
+:root {
+    --z-base: 1;
+    --z-menu: 100;
+    --z-modal: 1000;
+    --z-toast: 1100;
+}
+.form-drop-area {
+    background:rgba(55,55,55,.6);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    width: 200px;
+    height: 100px;
+    background: rgb(255, 255, 255);    
+
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: var(--z-modal);
+    padding: 1rem;
+    border-radius:5%;
+    box-shadow: rgba(0, 0, 0, 0.3) 0px 19px 38px, rgba(0, 0, 0, 0.22) 0px 15px 12px;
+}
+
