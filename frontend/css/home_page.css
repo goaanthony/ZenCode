@@ -1,23 +1,27 @@
-/* Global */
+:root {
+    --bg-colors: #2d2c2c;
+    --text-colors: #d1d1d0;
+}
+
+
 body {
     margin: 0;
     font-family: Arial, sans-serif;
-    background: #f5f5f5;
+    background: var(--bg-colors);
     transition: margin-left 0.3s ease;
     overflow-x: hidden;
 }
 
-/* Sidebar */
 .sidebar {
     height: 100vh;
     width: 0;
     position: fixed;
     top: 0;
     left: 0;
-    background-color: #222;
+    background-color: var(--bg-colors);
     overflow-x: hidden;
     transition: width 0.3s ease;
-    color: white;
+    color: var(--text-colors);
     padding-top: 60px;
     z-index: 1000;
 }
@@ -28,10 +32,9 @@ body {
 
 .sidebar #history {
     padding: 15px;
-    color: white;
+    color: var(--text-colors);
 }
 
-/* Contenu principal */
 .content {
     margin-left: 0;
     transition: margin-left 0.3s ease;
@@ -42,7 +45,6 @@ body {
     margin-left: 250px;
 }
 
-/* Bouton d'ouverture */
 .open-btn {
     position: fixed;
     top: 10px;
@@ -56,7 +58,6 @@ body {
     z-index: 1100;
 }
 
-/* Section principale */
 #main {
     background: white;
     padding: 20px;
@@ -65,7 +66,6 @@ body {
     border-radius: 5px;
 }
 
-/* Monaco Editor container */
 #editor-container {
     height: 500px;
     border: 1px solid #ccc;
@@ -74,7 +74,6 @@ body {
     border-radius: 10px;
 }
 
-/* Actions */
 #actions {
     margin-top: 20px;
 }
@@ -88,5 +87,5 @@ body {
 .fileinputdiv {
     position: relative;
     bottom: -84%;
-    z-index: 500;
+    z-index: 1200;
 }
