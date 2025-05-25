@@ -5,24 +5,19 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Éditer <%= fileName %></title>
     <link rel="stylesheet" href="/css/home_page.css">
-    <link rel="stylesheet" href="/css/dragandrop.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/styles/default.min.css">
 </head>
 <body>
     <div class="container">
         <h1>Éditer <%= fileName %></h1>
         <form action="/save" method="post">
             <input type="hidden" name="fileName" value="<%= fileName %>">
-            <textarea id="editor" name="content" rows="20" cols="80"><%= content %></textarea>
+            <div id="monaco-editor"><%= content %></div>
             <button type="submit">Sauvegarder</button>
-            <a href="/">Retour</a>
+            <button type="button" onclick="window.location.href='/'">Retour</button>
         </form>
     </div>
 
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.7.0/highlight.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/requirejs@2.3.6/require.js"></script>
     <script src="/js/editor.js"></script>
-    <script src="/js/dragdrop.js"></script>
-    <script src="https://unpkg.com/dropzone@5/dist/min/dropzone.min.js"></script>
-    <link rel="stylesheet" href="https://unpkg.com/dropzone@5/dist/min/dropzone.min.css" type="text/css" />
 </body>
 </html>

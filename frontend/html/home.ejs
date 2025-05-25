@@ -1,20 +1,30 @@
 <!DOCTYPE html>
 <html lang="fr">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Mini-VSCode</title>
-    <link rel="stylesheet" href="/css/home_page.css">
-</head>
-<body>
-    <div class="container">
-        <h1>Mini-VSCode</h1>
-        <form action="/upload" method="post" enctype="multipart/form-data">
-            <input type="file" name="file" accept=".txt,.abap,.apex,.azcli,.bat,.bicep,.mligo,.clo,.clj,.coffee,.c,.cpp,.cs,.csp,.css,.cypher,.dart,.dockerfile,.ecl,.ex,.exs,.f9,.fs,.ftl,.go,.gql,.graphql,.hbs,.hcl,.html,.ini,.java,.js,.julia,.kt,.less,.lex,.lua,.liquid,.m3,.md,.mdx,.s,.dax,.sql,.msql,.objc,.m,.pas,.p4,.p,.pl,.pgsql,.php,.ats,.pq,.ps1,.proto,.pug,.py,.qs,.r,.cshtml,.redis,.redshift,.rst,.rb,.rs,.sb,.scala,.scm,.scss,.sh,.sol,.aes,.sparql,.st,.swift,.sv,.v,.tcl,.twig,.ts,.tsp,.vb,.wgsl,.xml,.yaml,.yml,.json">
-            <button type="submit">Ouvrir</button>
-        </form>
-        <p>Ou</p>
-        <a href="/edit">Créer un nouveau fichier</a>
-    </div>
-</body>
+    <head>
+        <meta charset="UTF-8" />
+        <title>Zencode</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <link rel="stylesheet" href="/css/home_page.css">
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Code&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="container">
+            <h1>Zencode</h1>
+
+            <div id="home-upload">
+            <form action="/upload" method="post" enctype="multipart/form-data">
+                <input 
+                    type="file" 
+                    name="file" 
+                    accept=".txt,.abap,.apex,.azcli,.bat,.bicep,.mligo,.clo,.clj,.coffee,.c,.cpp,.cs,.csp,.css,.cypher,.dart,.dockerfile,.ecl,.ex,.exs,.f9,.fs,.ftl,.go,.gql,.graphql,.hbs,.hcl,.html,.ini,.java,.js,.julia,.kt,.less,.lex,.lua,.liquid,.m3,.md,.mdx,.s,.dax,.sql,.msql,.objc,.m,.pas,.p4,.p,.pl,.pgsql,.php,.ats,.pq,.ps1,.proto,.pug,.py,.qs,.r,.cshtml,.redis,.redshift,.rst,.rb,.rs,.sb,.scala,.scm,.scss,.sh,.sol,.aes,.sparql,.st,.swift,.sv,.v,.tcl,.twig,.ts,.tsp,.vb,.wgsl,.xml,.yaml,.yml,.json"
+                />
+
+                <div>
+                    <button type="submit">Ouvrir</button>
+                    <button type="button" onclick="location.href='/edit'">Nouveau fichier</button>
+                </div>
+            </form>
+            </div>
+        </div>
+    </body>
 </html>
